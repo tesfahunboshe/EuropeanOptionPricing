@@ -1,1 +1,1 @@
-# EuropeanOptionPricing
+# EuropeanStyleCallOptionPricing
