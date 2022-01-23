@@ -2,11 +2,12 @@ Package: EuropeanOptionPricing
 Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Tesfahun Tegene Boshe
+Maintainer: The package maintainer <tesfahuntegene6@gmail.com>
+Description: This simple package allows calculating the theoretical call price of options and also 
+    plotting the relation between the price and volatility as well as the price and expiry time, also called time to maturity. 
+    
+License: Not licenced
 Encoding: UTF-8
 LazyData: true
 Imports: Rcpp (>= 1.0.7)
