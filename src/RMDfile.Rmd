@@ -1,0 +1,115 @@
+---
+title: "European style up-and-out call option"
+author: "Tesfahun Tegene Boshe"
+date: "26/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Introduction
+
+This simple package allows calculating the theoretical call price of options and also plotting the relation between the price and volatility as well as the price and expiry time, also called time to maturity. 
+
+A European option is a type of options contract (call or put option) that restricts its execution until the expiration date. After an investor has purchased a European option, even if the price of the underlying security moves in a favorable direction, i.e., increase in the price of the stock for call options and decrease in the price of the stock for put options, the investor cannot take advantage by exercising the option early.
+
+
+The package and rmd file are already available at this link on github.  [link](https://github.com/tesfahunboshe/EuropeanOptionPricing) 
+
+
+### Install from a github repository
+
+you will need 'devtools' package if you have not installed it already. 
+
+```{r, warning=FALSE, message=FALSE}
+
+requiredPackages = c("devtools","ggplot2","tibble", "tidyverse")
+
+for(i in requiredPackages){if(!require(i,character.only = TRUE)) install.packages(i)}
+for(i in requiredPackages){if(!require(i,character.only = TRUE)) library(i,character.only = TRUE)}
+
+```
+
+
+```{r, warning=FALSE, message=FALSE, results='hide'}
+if(!require("EuropeanOptionPricing")) install_github("tesfahunboshe/EuropeanOptionPricing", force = TRUE)
+library(EuropeanOptionPricing)
+```
+
+### Testing out the package
+
+Call the *getSimpleMonteCarloPrice* function to calculate the European style call price of a chosen set of parameters. 
+
+The input parameters to the function are *(S0, K, vol, r, t, nrep)*, where *S0* - option price at the moment, *K* is strike price, *vol* is annualized volatility rate, *r* is the risk-free rate and *t* is time to maturity and *nrep* is the number of repeatitions for the Montecarlo simulation. 
+
+```{r}
+# 3. call the function from the package
+EuropeanOptionPricing::getSimpleMonteCarloPrice(105, 100, 95, 0.22, 0.05, 0.5, 1000)
+
+
+```
+
+a.  Relation between the theoretical price of the option and volatility of the underlying instrument returns
+ 
+```{r}
+
+getPriceswithvolatility <- function (vol) {
+  return(
+    EuropeanOptionPricing::getSimpleMonteCarloPrice(105, 100, 95, vol, 0.05, 0.5, 1000)
+    )
+}
+
+# Let's create a set of volatility values
+vol_values <- c(0.001, 0.01, 0.02, 0.05, 0.1, 0.15, 0.2, 0.3, 0.5)
+
+prices <- sapply(vol_values, getPriceswithvolatility) #function call
+
+```
+
+```{r}
+# visualization: options price vs. expiry 
+tibble(vol_values, prices) %>%
+  ggplot(aes(vol_values, prices)) +
+  geom_point(col = "red", size = 2) +
+  geom_line(aes(vol_values, prices),col = "tomato4")+
+  labs(
+    x     = "Volatility",
+    y     = "Call price",
+    title = "Option Price vs Volatility " )+
+  ylim(0,100)
+
+```
+
+
+b. Relation between the theoretical price of the option and time to maturity
+
+```{r}
+# Let's create a set of time_maturity values
+getPriceswithmaturity <- function (vol) {
+  return(
+    EuropeanOptionPricing::getSimpleMonteCarloPrice(105, 100, 95, vol, 0.05, 0.5, 1000)
+    )
+}
+
+# call the wrapping function 
+# arguments values of values of function 
+time_maturity <- seq(0.01, 0.5, by = 0.01)
+prices_ <- sapply(time_maturity, getPriceswithmaturity)
+
+# visualization: options price vs. expiry 
+tibble(time_maturity, prices_) %>%
+  ggplot(aes(time_maturity, prices_)) +
+  geom_point(col = "red", size = 2) +
+  geom_line(aes(time_maturity, prices_),col = "tomato4")+
+  labs(
+    x     = "Maturity time",
+    y     = "Call price",
+    title = "Option Price vs Maturity " )+
+  ylim(0,100)
+
+```
+
+
+
