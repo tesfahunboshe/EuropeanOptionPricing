@@ -70,7 +70,7 @@ double EuropeanOption::getSimpleMonteCarloPrice(int nReps){
 	for(int i = 0; i < nReps; i++){
 		generatePath();
 		thisMean=getMonteCarloMean(nReps);
-		rollingSum += (thisMean < strike) ? 0 : (thisMean - strike);
+		rollingSum += thisMean;
 	}
 
 	return exp(-r*expiry)*rollingSum/double(nReps);
