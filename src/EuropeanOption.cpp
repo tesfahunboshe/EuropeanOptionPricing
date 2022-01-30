@@ -55,7 +55,7 @@ double EuropeanOption::getMonteCarloMean(int nReps){
 
 	double mean = runningSum / nReps;
 	// mean *= exp(-r * Expiry);
-	mean = mean * exp(-r * expiry);
+	// mean = mean * exp(-r * expiry);
 	return mean;
 
 }
