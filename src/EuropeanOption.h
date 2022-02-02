@@ -18,7 +18,6 @@ public:
 
 	//methods
 	void generatePath();
-	double getMonteCarloMean(int nReps);
 	double getSimpleMonteCarloPrice(int nReps);
 	
 	//members

@@ -35,7 +35,7 @@ void EuropeanOption::generatePath(){
 
 
 //method definition
-double EuropeanOption::getMonteCarloMean(int nReps){
+double EuropeanOption::getSimpleMonteCarloPrice(int nReps){
 
 	double variance = vol * vol * expiry;
 	double rootVariance = sqrt(variance);
@@ -46,36 +46,20 @@ double EuropeanOption::getMonteCarloMean(int nReps){
 	double runningSum = 0;
 
 	for (unsigned long i = 0; i < nReps; i++) {
+		generatePath();
 		double thisGaussian = getOneGaussianByBoxMueller();
 		thisSpot = movedSpot * exp(rootVariance * thisGaussian);
 		double thisPayoff = thisSpot - strike;
-    	// thisPayoff = thisPayoff > 0 ? thisPayoff : 0;
     	if (thisPayoff>0) runningSum += thisPayoff;
 	}
 
 	double mean = runningSum / nReps;
-	// mean *= exp(-r * Expiry);
 	mean = mean * exp(-r * expiry);
 	return mean;
 
 }
 
 
-//method definition
-double EuropeanOption::getSimpleMonteCarloPrice(int nReps){
-
-	double rollingSum = 0.0;
-	double thisMean = 0.0;
-
-	for(int i = 0; i < nReps; i++){
-		generatePath();
-		thisMean=getMonteCarloMean(nReps);
-		rollingSum += (thisMean < strike) ? (strike - thisMean) : 0;
-	}
-
-	return exp(-r*expiry)*rollingSum/double(nReps);
-
-}
 
 
 
