@@ -59,7 +59,3 @@ double EuropeanOption::getSimpleMonteCarloPrice(int nReps){
 
 }
 
-
-
-
-
