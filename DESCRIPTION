@@ -6,7 +6,10 @@ Author: Tesfahun Tegene Boshe
 Maintainer: The package maintainer <tesfahuntegene6@gmail.com>
 Description: This simple package allows calculating the theoretical call price of options and also 
     plotting the relation between the price and volatility as well as the price and expiry time, also called time to maturity. 
+<<<<<<< HEAD
+=======
     
+>>>>>>> f45b903760d846aec63bf98937b0bbefee03c1d2
 License: Not licenced
 Encoding: UTF-8
 LazyData: true
