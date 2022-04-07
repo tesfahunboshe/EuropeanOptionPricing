@@ -6,7 +6,7 @@
   The package calculates the european style call option price
 }
 \description{
-The EuropeanStyleCallOptionPricing calculates the European style call option price  using simple MonteNegro simulation. 
+The EuropeanStyleCallOptionPricing calculates the European style call option price  using simple Monte Carlo simulation. 
 Rccp package was used to create the package. 
 }
 \details{
